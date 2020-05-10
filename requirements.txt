@@ -1,0 +1,4 @@
+requests
+PyYaml
+docker
+retry

@@ -1,0 +1,65 @@
+name: Ferryman
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    # 定时任务最短间隔为5分钟
+    - cron:  '* */12 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: init
+      run: |
+        # 查看当前目录
+        echo "Current path: $(pwd)"
+        
+        # 列出文件
+        echo "List files: $(ls -l)"
+        
+        # 修改时区
+        /bin/cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        echo "current time: $(date +%Y-%m-%d\ %H:%M:%S)"
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+
+    - name: Install dependencies
+      run: |
+        python -V
+        python -m pip install --upgrade pip
+        
+        #pip install flake8 pytest
+        
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+
+    - name: Run APP
+      env:
+        TARGET_USER: ${{ secrets.TARGET_USER }}
+        TARGET_PASSWORD: ${{ secrets.TARGET_PASSWORD }}
+      run: |
+        python ferryman.py
+
+    - name: Git Commit
+      env:
+        GIT_MAIL: ${{ secrets.GIT_MAIL }}
+        GIT_USER: ${{ secrets.GIT_USER }}
+      run: |
+        git config --global user.email $GIT_MAIL
+        git config --global user.name $GIT_USER
+        git add .
+        git commit -m "auto update $(date +%Y-%m-%d\ %H:%M:%S)" -a || echo "nothing to commit"
+
+    - name: Git Push Changes
+      uses: ad-m/github-push-action@master
+      with:
+        # 使用Github Actions内置秘钥GITHUB_TOKEN，用于授权访问自己的GitHub存储库
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

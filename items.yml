@@ -1,0 +1,69 @@
+nginx-ingress-controller:
+  source: quay.io/kubernetes-ingress-controller/
+  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+flannel:
+  source: quay.io/coreos/
+  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+kubernetes-dashboard-amd64:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+    
+pause:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: ''
+    limit: 60
+
+coredns:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+etcd:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+kube-proxy:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+kube-scheduler:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+kube-controller-manager:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
+
+kube-apiserver:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    begin: 'v1.1.9'
+    limit: 30
