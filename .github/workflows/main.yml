@@ -5,7 +5,7 @@ on:
     branches: [ master ]
   schedule:
     # 定时任务最短间隔为5分钟
-    - cron:  '* */12 * * *'
+    - cron:  '* */4 * * *'
 
 jobs:
   build:
