@@ -1,69 +1,107 @@
-nginx-ingress-controller:
-  source: quay.io/kubernetes-ingress-controller/
-  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
-  tag:
-    begin: 'v1.1.9'
-    limit: 30
-
-flannel:
-  source: quay.io/coreos/
-  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
-  tag:
-    begin: 'v1.1.9'
-    limit: 30
-
-kubernetes-dashboard-amd64:
-  source: k8s.gcr.io/
-  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
-  tag:
-    begin: 'v1.1.9'
-    limit: 30
-    
 pause:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: ''
-    limit: 60
+    limit: 9999
 
 coredns:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: 'v1.1.9'
-    limit: 30
+    limit: 9999
 
 etcd:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: 'v1.1.9'
-    limit: 30
+    limit: 9999
 
 kube-proxy:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: 'v1.1.9'
-    limit: 30
+    limit: 9999
 
 kube-scheduler:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: 'v1.1.9'
-    limit: 30
+    limit: 9999
 
 kube-controller-manager:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: 'v1.1.9'
-    limit: 30
+    limit: 9999
 
 kube-apiserver:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    begin: 'v1.1.9'
-    limit: 30
+    limit: 9999
+
+kubernetes-dashboard-amd64:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
+    
+metrics-server-amd64:
+  source: k8s.gcr.io/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
+#########
+flannel:
+  source: quay.io/coreos/
+  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  tag:
+    limit: 9999
+
+nginx-ingress-controller:
+  source: quay.io/kubernetes-ingress-controller/
+  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  tag:
+    limit: 9999
+########
+dashboard:
+  source: docker.io/kubernetesui/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+nexus3:
+  source: docker.io/sonatype/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+sonarqube:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+traefik:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+jenkins:
+  source: docker.io/jenkins/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 10
+
+gitlab-ce:
+  source: docker.io/gitlab/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 10
+
+gitlab-runner:
+  source: docker.io/gitlab/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 10

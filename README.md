@@ -1,20 +1,49 @@
 # Ferryman
-## 简介
+> ​&#8195;&#8195;由于国内受GWF影响无法直接访问谷歌gcr.io导致无法直接获取K8s系列镜像，虽有部分国内云厂商提供K8s镜像，但可能不包含quay.io的系列镜像，且部分docker.io镜像即使配置国内镜像加速器地址还是速度缓慢。
+>
+> ​&#8195;&#8195;基于以上背景，开发出该镜像同步工具，主要用于将K8s镜像同步到国内个人仓库，从而获取被墙的镜像并提高镜像拉取速度。
 
-- K8s镜像仓库同步工具，用于同步国外K8s镜像仓库到国内个人镜像仓库
-- 支持源仓库种类
-  - gcr.io
-  - quay.io
-  - docker.io（待支持）
+<br/>
 
-### 仓库对应地址
+## **功能**
+
+- 全量：同步仓库下所有Tag
+
+- 限量：同步当下最新指定数量的Tag
+
+<br/>
+
+## 同步信息
+
+### 支持同步源
+
+- gcr.io
+- quay.io
+- docker.io
+
+<br/>
+
+### 同步源对应地址
 
 | 源         | 目标                                                         |
 | ---------- | ------------------------------------------------------------ |
-| k8s.gcr.io | registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/{image}:{tag} |
-| quay.io    | registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/{image}:{tag} |
+| k8s.gcr.io | **registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/**{image}:{tag} |
+| quay.io    | **registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/**{image}:{tag} |
+| docker.io  | **registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/**{image}:{tag} |
 
-### 当前同步仓库列表
+**镜像拉取示例**
+
+**前**：docker pull k8s.gcr.io/pause:2.0
+
+**后**：docker pull registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/pause:2.0
+
+<br/>
+
+### 同步列表
+
+> 本项目已托管到GitHub Actions，以下列表镜像每隔6小时自动同步更新一次；
+>
+> 已同步镜像的版本号列表可查看`history`目录下对应txt文件。
 
 | 镜像源     | 镜像                       |
 | ---------- | -------------------------- |
@@ -26,14 +55,18 @@
 | k8s.gcr.io | coredns                    |
 | k8s.gcr.io | pause                      |
 | k8s.gcr.io | kubernetes-dashboard-amd64 |
+| k8s.gcr.io | metrics-server-amd64       |
 | quay.io    | flannel                    |
 | quay.io    | nginx-ingress-controller   |
+| docker.io  | dashboard                  |
+| docker.io  | jenkins                    |
+| docker.io  | nexus3                     |
+| docker.io  | sonarqube                  |
+| docker.io  | gitlab-ce                  |
+| docker.io  | gitlab-runner              |
+| docker.io  | traefik                    |
 
-## 功能
-
-- 全量：全量同步仓库下所有Tag
-- 限量：同步限定数量的Tag（待支持）
-- 指定：只同步指定Tag（待支持）
+<br/>
 
 ## 文件说明
 
@@ -43,25 +76,39 @@
   
 - ### items.yml
 
-  - 存放需要同步的镜像列表
-
+  - 存放需要同步的镜像列表，可根据自身需求修改。
+  - `limit`字段用于限制每次更新版本数量，默认为9999，可根据自身需求修改。
 
 - ### history（目录）
 
-  - 存放每个镜像的同步记录
+  - 存放每个镜像的同步记录，程序会跳过已同步记录，首次使用时请先删除整个目录。
 
+<br/>
 
 ## 使用说明
 
-1. **配置私有镜像仓库账号密码**：编辑`ferryman.py`文件修改以下内容为你的认证仓库账号密码
+- **环境要求**：Python 3.7
+
+1. **配置私有镜像仓库账号密码**
+
+   编辑`ferryman.py`修改以下内容为你的个人镜像仓库账号密码
 
    ```shell
    target_auth = {'username': 'Your username', 'password': 'Your password'}
    ```
 
-   
+   **或**
 
-2. **配置私有镜像仓库地址**：编辑`items.yml`文件，修改每个项目`target`指向你的私有镜像仓库
+   使用临时环境变量配置你的个人镜像仓库账号密码
+
+   ```shell
+   export TARGET_USER='Your username'
+   export TARGET_PASSWORD='Your password'
+   ```
+
+2. **配置私有镜像仓库地址**
+
+   编辑`items.yml`修改每个项目`target`指向你的个人镜像仓库（尾部要以“/”结束）
 
    ```yaml
    kube-apiserver:
@@ -69,27 +116,38 @@
      target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
    ```
 
-
-
 3. **运行程序**：`python ferryman.py`
 
-
+<br/>
 
 ## 更新记录
 
 - **2020/05/10**    初始化
+
 - **2020/05/11**    重新封装docker-py的push方法，增加登录仓库验证失败提示与显示推送进度
 
+- **2020/05/17**    重写核心部分，不向后兼容
 
+  ​&#8195;&#8195;&#8195;&#8195;&#8195;1、重写Tag获取方法，改用时间进行排序、哈希+Tag进行去重
+  
+  ​&#8195;&#8195;&#8195;&#8195;&#8195;2、增加镜像缓存，提高相似镜像拉取速度
+  
+  ​&#8195;&#8195;&#8195;&#8195;&#8195;3、增加限制更新Tag数量，通过编辑`items.yml`文件`limit`字段，默认为9999
+  
+  ​&#8195;&#8195;&#8195;&#8195;&#8195;4、本地同步历史文件增加前缀便于区分
+  
+  ​&#8195;&#8195;&#8195;&#8195;&#8195;5、只拉取Linux平台类型镜像，排除Windows平台类型镜像
+  
+<br/>
 
 ## 待更新计划
 
-1. 支持docker.io
-2. 支持指定Tag
-3. 支持限制更新Tag数量
-4. 初始化时判断能否访问gcr.io，提示是否在GWF内
-5. gcr.io与quay.io存在同名项目，需要将history文件加前缀
-7. 已知对Tag名进行排序存在纯英文Tag排到前面问题，需要后续根据Tag更新时间来排序
-8. 已知更新Tag时没对latest进行特殊处理，需要后续进行处理
-9. 日志增加输出到文件
+1. 因为存放更新项目的YAML是字典结构，不支持重复Key，所以不能存在相同项目名，待支持。
 
+<br/>
+
+## 流程图
+
+> 以下图片可能因GWF原因无法正常显示
+
+![流程图](https://s1.ax1x.com/2020/05/15/YrIXXq.png)

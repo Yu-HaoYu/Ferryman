@@ -3,10 +3,13 @@ name: Ferryman
 on:
   push:
     branches: [ master ]
+    # 忽略指定文件
+    paths-ignore:
+    - 'README.md'
   schedule:
-    # 定时任务最短间隔为5分钟
+    # Minimum interval 5 minutes
     - cron:  '0 */6 * * *'
-
+    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,13 +18,10 @@ jobs:
       
     - name: init
       run: |
-        # 查看当前目录
         echo "Current path: $(pwd)"
-        
-        # 列出文件
         echo "List files: $(ls -l)"
         
-        # 修改时区
+        # time zone
         /bin/cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
         echo "current time: $(date +%Y-%m-%d\ %H:%M:%S)"
 
@@ -42,6 +42,11 @@ jobs:
         fi
 
     - name: Run APP
+      # 指定超时分钟数（Default: 360）
+      # 每个Job最大时长是默认的360分钟，超过后会被触发取消操作，而不是超时操作，所以最好设置一个超时时间触发超时
+      timeout-minutes: 300
+      # 即使步骤出错也继续运行
+      continue-on-error: true
       env:
         TARGET_USER: ${{ secrets.TARGET_USER }}
         TARGET_PASSWORD: ${{ secrets.TARGET_PASSWORD }}
@@ -56,10 +61,12 @@ jobs:
         git config --global user.email $GIT_MAIL
         git config --global user.name $GIT_USER
         git add .
-        git commit -m "auto update $(date +%Y-%m-%d\ %H:%M:%S)" -a || echo "nothing to commit"
+        git commit -m "Updated at $(date +%Y-%m-%d\ %H:%M:%S)" -a || echo "nothing to commit"
 
     - name: Git Push Changes
       uses: ad-m/github-push-action@master
       with:
         # 使用Github Actions内置秘钥GITHUB_TOKEN，用于授权访问自己的GitHub存储库
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # 指定推送到哪个分支
+        branch: master
