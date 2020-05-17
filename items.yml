@@ -92,16 +92,16 @@ jenkins:
   source: docker.io/jenkins/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 10
+    limit: 9999
 
 gitlab-ce:
   source: docker.io/gitlab/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 10
+    limit: 9999
 
 gitlab-runner:
   source: docker.io/gitlab/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 10
+    limit: 9999
