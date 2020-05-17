@@ -25,6 +25,15 @@ if os.environ.get('TARGET_USER') and os.environ.get('TARGET_PASSWORD'):
 else:
     target_auth = {'username': 'Your username', 'password': 'Your password'}
 
+# 重新封装Docker Push，支持登录验证失败报错与Push时显示进度条
+def docker_push(image, auth):
+    output = pydocker.push(image, auth_config=auth, stream=True, decode=True)
+    for line in output:
+        if line.get("error"):
+            raise InterruptedError(line.get("error").replace('\n', ' '))
+        if line.get("progress"):
+            print(line.get("status"), line.get("progress"), end="\r")
+
 # 创建日志目录
 def create_dir(dir_path):
     if os.path.exists(dir_path):
@@ -151,7 +160,7 @@ def sync_images(image, src_repo, target_repo, tag_list):
             pydocker.remove_image(source)
 
             logging.info ("Push Image: %s, Tag: " %image + tag_list[tag])
-            retry_call(pydocker.push, fargs=[target, "", "", target_auth] , exceptions=Exception, tries=3, delay=5)
+            retry_call(docker_push, fargs=[target, target_auth] , exceptions=Exception, tries=3, delay=5)
             pydocker.remove_image(target)
 
             # 加载历史记录，将当前已同步版本号追加到历史记录并写回本地
