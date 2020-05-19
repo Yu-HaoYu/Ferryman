@@ -46,7 +46,7 @@ jobs:
       # 每个Job最大时长是默认的360分钟，超过后会被触发取消操作，而不是超时操作，所以最好设置一个超时时间触发超时
       timeout-minutes: 300
       # 即使步骤出错也继续运行
-      continue-on-error: true
+      #continue-on-error: true
       env:
         TARGET_USER: ${{ secrets.TARGET_USER }}
         TARGET_PASSWORD: ${{ secrets.TARGET_PASSWORD }}
