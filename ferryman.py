@@ -223,34 +223,29 @@ def sync_images(image, src_repo, target_repo, tag_list):
             logging.info (f"Image Update: {dt}")
 
             logging.info (f"Pull Image: {image}, Tag: {tag}")
-            retry_call(pydocker.pull, fargs=[source], exceptions=Exception, tries=3, delay=5)
+            retry_call(pydocker.pull, fargs=[source], exceptions=Exception, tries=6, delay=10)
 
             logging.info (f"Tag  Image: {image}, Tag: {tag}")
             pydocker.tag(source, target)
             #pydocker.remove_image(source)
 
             logging.info (f"Push Image: {image}, Tag: {tag}")
-            retry_call(docker_push, fargs=[target, target_auth] , exceptions=Exception, tries=3, delay=5)
+            retry_call(docker_push, fargs=[target, target_auth] , exceptions=Exception, tries=6, delay=10)
             pydocker.remove_image(target)
 
             # 加载本地历史同步记录
             local_list = load_history(image, domain)
             logging.debug (f"History list: Count {len(local_list)}, {local_list}")
-            # 取本次更新Tag对本地列表做去重（防止回写时Latest类的Tag重复存在多个）
-            for i in local_list:
-                if tag in i.values():
-                    local_list.remove(i)
-            # 追加本次更新的Tag到尾部并重新排序
+            # 以当前Tag去重后排序回写
+            local_list = [i for i in local_list if tag != i["tag"]]
             local_list.append({"dt": dt, "sha256": sha256, "tag": tag})
             local_list.sort(reverse=True, key=lambda x: x["dt"])
-
-            # 回写本次同步记录到本地文件
             write_history(image, domain, local_list)
 
             # 缓存镜像：缓存几个镜像在队列中，然后先进先出循环删除（利用缓存镜像加速相似镜像拉取速度） 
             global queue_list
             queue_list.append(source)
-            if len(queue_list) == 4:
+            if len(queue_list) == 6:
                 logging.debug (f"Count before clearing the queue: {len(queue_list)}，Queue list: {queue_list}")
                 logging.debug (f"Current clean image: {queue_list[0]}")
                 pydocker.remove_image(queue_list[0])

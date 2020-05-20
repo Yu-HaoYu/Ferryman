@@ -2,7 +2,8 @@ name: Ferryman
 
 on:
   push:
-    branches: [ master ]
+    branches: 
+    - '*'
     # 忽略指定文件
     paths-ignore:
     - 'README.md'
@@ -53,7 +54,7 @@ jobs:
       run: |
         python ferryman.py
 
-    - name: Git Commit
+    - name: Git Commit & Push
       env:
         GIT_MAIL: ${{ secrets.GIT_MAIL }}
         GIT_USER: ${{ secrets.GIT_USER }}
@@ -62,11 +63,12 @@ jobs:
         git config --global user.name $GIT_USER
         git add .
         git commit -m "Updated at $(date +%Y-%m-%d\ %H:%M:%S)" -a || echo "nothing to commit"
+        git push
 
-    - name: Git Push Changes
-      uses: ad-m/github-push-action@master
-      with:
+    #- name: Git Push Changes
+    #  uses: ad-m/github-push-action@master
+    #  with:
         # 使用Github Actions内置秘钥GITHUB_TOKEN，用于授权访问自己的GitHub存储库
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # 指定推送到哪个分支
-        branch: master
+    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # 指定推送到哪个分支（默认为master）
+    #   branch: test
