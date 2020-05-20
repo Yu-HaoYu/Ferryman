@@ -89,7 +89,7 @@
 
 ## 使用说明
 
-- **环境要求**： ![](https://img.shields.io/badge/platform-Linux-blue)![Python 3.7](https://img.shields.io/badge/Python-v3.7-blue)![](https://img.shields.io/badge/Docker-lightgrey)
+- **环境要求**： ![](https://img.shields.io/badge/platform-Linux-blue)&nbsp;&nbsp;![Python 3.7](https://img.shields.io/badge/Python-v3.7-blue)&nbsp;&nbsp;![](https://img.shields.io/badge/Docker-lightgrey)
 
 1. **配置私有镜像仓库账号密码**
 
@@ -118,7 +118,9 @@
      target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
    ```
 
-3. **运行程序**：`python ferryman.py`
+3. **删除本仓库的同步记录**：删除`history`目录，否则程序运行时会读取并跳过已同步的历史记录
+
+4. **运行程序**：`python ferryman.py`
 
 <br/>
 
