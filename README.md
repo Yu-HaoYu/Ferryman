@@ -1,4 +1,6 @@
 # Ferryman
+![](https://img.shields.io/badge/platform-Linux-blue)&nbsp;&nbsp;![Python 3.7](https://img.shields.io/badge/Python-v3.7-blue)&nbsp;&nbsp;![](https://img.shields.io/badge/Docker-lightgrey)
+
 > &#8195;&#8195;国内因某些原因无法直接访问谷歌gcr.io导致无法直接获取K8s系列镜像，虽有部分云厂商提供K8s镜像，但可能不包含quay.io的系列镜像，且部分docker.io镜像即使配置国内镜像加速器地址还是速度缓慢，经测试阿里云的镜像加速器地址与个人免费镜像仓库镜像拉取速度对比，后者要比前者快2~3倍。
 >
 > &#8195;&#8195;基于以上背景，开发出该镜像同步工具，主要用于将镜像同步到国内个人仓库，从而获取被墙的镜像与提高镜像拉取速度。
@@ -89,7 +91,7 @@
 
 ## 使用说明
 
-- **环境要求**： ![](https://img.shields.io/badge/platform-Linux-blue)&nbsp;&nbsp;![Python 3.7](https://img.shields.io/badge/Python-v3.7-blue)&nbsp;&nbsp;![](https://img.shields.io/badge/Docker-lightgrey)
+- **环境要求**： 
 
 1. **配置私有镜像仓库账号密码**
 
