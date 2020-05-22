@@ -1,5 +1,5 @@
 # Ferryman
-![](https://img.shields.io/badge/platform-Linux-blue)&nbsp;&nbsp;![Python 3.7](https://img.shields.io/badge/Python-v3.7-blue)&nbsp;&nbsp;![](https://img.shields.io/badge/Docker-lightgrey)
+![](https://img.shields.io/github/workflow/status/Yu-HaoYu/Ferryman/Ferryman)&nbsp;&nbsp;![](https://img.shields.io/badge/platform-Linux-blue)&nbsp;&nbsp;![Python 3.7](https://img.shields.io/badge/Python-v3.7-blue)&nbsp;&nbsp;![](https://img.shields.io/badge/Docker-v17.03.0+-blue)
 
 > &#8195;&#8195;国内因某些原因无法直接访问谷歌gcr.io导致无法直接获取K8s系列镜像，虽有部分云厂商提供K8s镜像，但可能不包含quay.io的系列镜像，且部分docker.io镜像即使配置国内镜像加速器地址还是速度缓慢，经测试阿里云的镜像加速器地址与个人免费镜像仓库镜像拉取速度对比，后者要比前者快2~3倍。
 >
@@ -131,23 +131,13 @@
 - **2020/05/11**    重新封装docker-py的push方法，增加登录仓库验证失败提示与显示推送进度
 
 - **2020/05/17**    重写核心部分，不向后兼容
-
-  &#8195;&#8195;&#8195;&#8195;&#8195;1、重写Tag获取方法，改用时间进行排序、哈希+Tag进行去重
-  
-  &#8195;&#8195;&#8195;&#8195;&#8195;2、增加镜像缓存，提高相似镜像拉取速度
-  
-  &#8195;&#8195;&#8195;&#8195;&#8195;3、增加限制更新Tag数量，通过编辑`items.yml`文件`limit`字段，默认为9999
-  
-  &#8195;&#8195;&#8195;&#8195;&#8195;4、本地同步历史文件增加前缀便于区分
-  
-  &#8195;&#8195;&#8195;&#8195;&#8195;5、只拉取Linux平台类型镜像，排除Windows平台类型镜像
   
 
 <br/>
 
-## 待更新计划
+## 已知问题
 
-1. 因为存放更新项目的YAML是字典结构，不支持重复Key，所以不能存在相同项目名，待支持。
+1. 当前项目配置文件因为结构问题，所以暂不支持存在相同项目名，待支持。
 
 <br/>
 
