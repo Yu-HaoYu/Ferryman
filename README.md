@@ -146,3 +146,10 @@
 > 以下图片可能因GWF原因无法正常显示
 
 ![流程图](https://s1.ax1x.com/2020/05/15/YrIXXq.png)
+
+## 相似项目指引
+
+- https://github.com/deislabs/oras
+- https://github.com/containers/skopeo
+- https://github.com/containers/image
+- https://github.com/AliyunContainerService/image-syncer
