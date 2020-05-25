@@ -295,10 +295,10 @@ def main(yml):
             logging.info ("Unsupported sync source")
             exit ()
 
-        # 排除掉Win平台的Tag
+        # 排除掉Win平台、Gitlab-ce nightly
         new_src_list = src_list.copy()
         for i in new_src_list:
-            if "windowsservercore" in str(i) or "nanoserver" in str(i):
+            if "windowsservercore" in str(i) or "nanoserver" in str(i) or "nightly" in str(i):
                 src_list.remove(i)
         new_src_list.clear()
 
