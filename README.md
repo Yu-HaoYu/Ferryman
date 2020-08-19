@@ -64,6 +64,8 @@
 | quay.io    | nginx-ingress-controller   |
 | docker.io  | dashboard                  |
 | docker.io  | jenkins                    |
+| docker.io  | docker                     |
+| docker.io  | blueocean                  |
 | docker.io  | nexus3                     |
 | docker.io  | sonarqube                  |
 | docker.io  | gitlab-ce                  |

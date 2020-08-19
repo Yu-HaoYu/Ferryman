@@ -94,6 +94,18 @@ jenkins:
   tag:
     limit: 9999
 
+docker:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+blueocean:
+  source: docker.io/jenkinsci/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+    
 gitlab-ce:
   source: docker.io/gitlab/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
