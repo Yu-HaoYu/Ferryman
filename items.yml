@@ -98,13 +98,13 @@ docker:
   source: docker.io/library/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 30
+    limit: 9999
 
 blueocean:
   source: docker.io/jenkinsci/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 30
+    limit: 9999
     
 gitlab-ce:
   source: docker.io/gitlab/
