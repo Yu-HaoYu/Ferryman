@@ -117,3 +117,9 @@ gitlab-runner:
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
     limit: 9999
+    
+jms_all:
+  source: docker.io/jumpserver/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
