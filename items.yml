@@ -123,3 +123,33 @@ jms_all:
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
     limit: 9999
+
+nginx:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+tomcat:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+openjdk:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+mysql:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+redis:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999

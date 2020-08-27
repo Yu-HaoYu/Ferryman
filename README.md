@@ -49,28 +49,34 @@
 >
 > 已同步镜像的版本号列表可查看`history`目录下对应txt文件。
 
-| 镜像源     | 镜像                       |
-| ---------- | -------------------------- |
-| k8s.gcr.io | kube-proxy                 |
-| k8s.gcr.io | kube-scheduler             |
-| k8s.gcr.io | kube-controller-manager    |
-| k8s.gcr.io | kube-apiserver             |
-| k8s.gcr.io | etcd                       |
-| k8s.gcr.io | coredns                    |
-| k8s.gcr.io | pause                      |
-| k8s.gcr.io | kubernetes-dashboard-amd64 |
-| k8s.gcr.io | metrics-server-amd64       |
-| quay.io    | flannel                    |
-| quay.io    | nginx-ingress-controller   |
-| docker.io  | dashboard                  |
-| docker.io  | jenkins                    |
-| docker.io  | docker                     |
-| docker.io  | blueocean                  |
-| docker.io  | nexus3                     |
-| docker.io  | sonarqube                  |
-| docker.io  | gitlab-ce                  |
-| docker.io  | gitlab-runner              |
-| docker.io  | traefik                    |
+| 镜像源     | 命名空间                      | 镜像                       |
+| ---------- | ----------------------------- | -------------------------- |
+| k8s.gcr.io |                               | kube-proxy                 |
+| k8s.gcr.io |                               | kube-scheduler             |
+| k8s.gcr.io |                               | kube-controller-manager    |
+| k8s.gcr.io |                               | kube-apiserver             |
+| k8s.gcr.io |                               | etcd                       |
+| k8s.gcr.io |                               | coredns                    |
+| k8s.gcr.io |                               | pause                      |
+| k8s.gcr.io |                               | kubernetes-dashboard-amd64 |
+| k8s.gcr.io |                               | metrics-server-amd64       |
+| quay.io    | coreos                        | flannel                    |
+| quay.io    | kubernetes-ingress-controller | nginx-ingress-controller   |
+| docker.io  | kubernetesui                  | dashboard                  |
+| docker.io  | jenkins                       | jenkins                    |
+| docker.io  | jenkinsci                     | blueocean                  |
+| docker.io  | sonatype                      | nexus3                     |
+| docker.io  | library                       | docker                     |
+| docker.io  | gitlab                        | gitlab-ce                  |
+| docker.io  | gitlab                        | gitlab-runner              |
+| docker.io  | jumpserver                    | jms_all                    |
+| docker.io  | library                       | sonarqube                  |
+| docker.io  | library                       | traefik                    |
+| docker.io  | library                       | nginx                      |
+| docker.io  | library                       | tomcat                     |
+| docker.io  | library                       | openjdk                    |
+| docker.io  | library                       | mysql                      |
+| docker.io  | library                       | redis                      |
 
 <br/>
 
