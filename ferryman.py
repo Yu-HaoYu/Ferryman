@@ -180,7 +180,7 @@ def requests_docker(items, namespaces = "none"):
             dt = datetime_conv(v["last_updated"])
         # Get sha256
         for x in v['images']:
-            if x['architecture'] == "amd64":
+            if x['architecture'] == "amd64" and x['os'] != "windows":
                 if "digest" in x.keys():
                     sha256 = x['digest']
                 else:
