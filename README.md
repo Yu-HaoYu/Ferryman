@@ -60,6 +60,7 @@
 | k8s.gcr.io |                               | pause                      |
 | k8s.gcr.io |                               | kubernetes-dashboard-amd64 |
 | k8s.gcr.io |                               | metrics-server-amd64       |
+| k8s.gcr.io | ingress-nginx                 | controller                 |
 | quay.io    | coreos                        | flannel                    |
 | quay.io    | kubernetes-ingress-controller | nginx-ingress-controller   |
 | docker.io  | kubernetesui                  | dashboard                  |
@@ -77,6 +78,11 @@
 | docker.io  | library                       | openjdk                    |
 | docker.io  | library                       | mysql                      |
 | docker.io  | library                       | redis                      |
+| docker.io  | jettech                       | kube-webhook-certgen       |
+
+
+
+
 
 <br/>
 

@@ -102,7 +102,10 @@ def datetime_conv(dt):
 def requests_gcr(items, namespaces = "none"):
     logging.info (f"The current mirror source is k8s.gcr.io")
     # 获取Tag
-    url = (f"https://k8s.gcr.io/v2/{items}/tags/list")
+    if namespaces == "none":
+        url = (f"https://k8s.gcr.io/v2/{items}/tags/list")
+    else:
+        url = (f"https://k8s.gcr.io/v2/{namespaces}/{items}/tags/list")
     r = requests.get(url)
     response_dict = r.json().get("manifest")
     # 提取Tag、Date、sha256
@@ -286,7 +289,10 @@ def main(yml):
 
         # 判断源
         if "k8s.gcr.io" in source:
-            src_list = requests_gcr(items)
+            if namespaces == domain:
+                src_list = requests_gcr(items)
+            else:
+                src_list = requests_gcr(items, namespaces)
         elif 'quay.io' in source:
             src_list = requests_quay(items, namespaces)
         elif 'docker.io' in source:

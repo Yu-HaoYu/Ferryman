@@ -51,6 +51,12 @@ metrics-server-amd64:
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
     limit: 9999
+
+controller:
+  source: k8s.gcr.io/ingress-nginx/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
 #########
 flannel:
   source: quay.io/coreos/
@@ -150,6 +156,12 @@ mysql:
 
 redis:
   source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
+kube-webhook-certgen:
+  source: docker.io/jettech/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
     limit: 9999
