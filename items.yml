@@ -69,6 +69,12 @@ nginx-ingress-controller:
   target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
   tag:
     limit: 9999
+    
+kube-state-metrics:
+  source: quay.io/coreos/
+  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  tag:
+    limit: 9999
 ########
 dashboard:
   source: docker.io/kubernetesui/

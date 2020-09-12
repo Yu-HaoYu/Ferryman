@@ -27,22 +27,6 @@
 
 <br/>
 
-### 同步源对应地址
-
-| 源         | 目标                                                         |
-| ---------- | ------------------------------------------------------------ |
-| k8s.gcr.io | **registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/**{image}:{tag} |
-| quay.io    | **registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/**{image}:{tag} |
-| docker.io  | **registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/**{image}:{tag} |
-
-**镜像拉取示例**
-
-**前**：docker pull k8s.gcr.io/pause:2.0
-
-**后**：docker pull registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/pause:2.0
-
-<br/>
-
 ### 同步列表
 
 > 本项目已托管到GitHub Actions，以下镜像列表每隔6小时自动同步更新一次；
@@ -63,6 +47,7 @@
 | k8s.gcr.io | ingress-nginx                 | controller                 |
 | quay.io    | coreos                        | flannel                    |
 | quay.io    | kubernetes-ingress-controller | nginx-ingress-controller   |
+| quay.io    | coreos                        | kube-state-metrics:v1.9.7  |
 | docker.io  | kubernetesui                  | dashboard                  |
 | docker.io  | jenkins                       | jenkins                    |
 | docker.io  | jenkinsci                     | blueocean                  |
@@ -81,6 +66,22 @@
 | docker.io  | jettech                       | kube-webhook-certgen       |
 
 
+
+<br/>
+
+### 同步源对应地址
+
+| 源         | 目标                                                         |
+| ---------- | ------------------------------------------------------------ |
+| k8s.gcr.io | **registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/**{image}:{tag} |
+| quay.io    | **registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/**{image}:{tag} |
+| docker.io  | **registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/**{image}:{tag} |
+
+**镜像拉取示例**
+
+**前**：docker pull k8s.gcr.io/pause:2.0
+
+**后**：docker pull registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/pause:2.0
 
 
 
