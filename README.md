@@ -45,6 +45,7 @@
 | k8s.gcr.io |                               | kubernetes-dashboard-amd64 |
 | k8s.gcr.io |                               | metrics-server-amd64       |
 | k8s.gcr.io | ingress-nginx                 | controller                 |
+| k8s.gcr.io | descheduler                   | descheduler                |
 | quay.io    | coreos                        | flannel                    |
 | quay.io    | kubernetes-ingress-controller | nginx-ingress-controller   |
 | quay.io    | coreos                        | kube-state-metrics:v1.9.7  |

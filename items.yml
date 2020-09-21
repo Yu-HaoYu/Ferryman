@@ -57,6 +57,12 @@ controller:
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
     limit: 9999
+
+descheduler:
+  source: k8s.gcr.io/descheduler/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
 #########
 flannel:
   source: quay.io/coreos/
