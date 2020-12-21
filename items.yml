@@ -63,6 +63,13 @@ descheduler:
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
     limit: 9999
+
+dnsutils:
+  source: k8s.gcr.io/kubernetes-e2e-test-images/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
+
 #########
 flannel:
   source: quay.io/coreos/
