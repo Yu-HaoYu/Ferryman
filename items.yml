@@ -178,3 +178,9 @@ kube-webhook-certgen:
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
     limit: 9999
+
+busybox:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999

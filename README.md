@@ -65,6 +65,7 @@
 | docker.io  | library                       | mysql                      |
 | docker.io  | library                       | redis                      |
 | docker.io  | jettech                       | kube-webhook-certgen       |
+| docker.io  | library                       | busybox                    |
 
 
 
