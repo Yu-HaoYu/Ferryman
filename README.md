@@ -51,6 +51,9 @@
 | quay.io    | coreos                        | kube-state-metrics:v1.9.7  |
 | docker.io  | kubernetesui                  | dashboard                  |
 | docker.io  | jenkins                       | jenkins                    |
+| docker.io  | jenkins                       | inbound-agent              |
+| docker.io  | maorfr                        | kube-tasks                 |
+| docker.io  | kiwigrid                      | k8s-sidecar                |
 | docker.io  | jenkinsci                     | blueocean                  |
 | docker.io  | sonatype                      | nexus3                     |
 | docker.io  | library                       | docker                     |
@@ -148,7 +151,6 @@
 - **2020/05/11**    重新封装docker-py的push方法，增加登录仓库验证失败提示与显示推送进度
 
 - **2020/05/17**    重写核心部分，不向后兼容
-  
 
 <br/>
 

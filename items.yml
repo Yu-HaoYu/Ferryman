@@ -113,6 +113,24 @@ jenkins:
   tag:
     limit: 9999
 
+inbound-agent:
+  source: docker.io/jenkins/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 3
+
+kube-tasks:
+  source: docker.io/maorfr/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 3
+
+k8s-sidecar:
+  source: docker.io/kiwigrid/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 3
+
 docker:
   source: docker.io/library/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
