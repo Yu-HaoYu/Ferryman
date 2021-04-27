@@ -129,7 +129,7 @@ k8s-sidecar:
   source: docker.io/kiwigrid/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 3
+    limit: 9999
 
 docker:
   source: docker.io/library/
