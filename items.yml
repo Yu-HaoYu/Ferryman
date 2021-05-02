@@ -117,7 +117,7 @@ inbound-agent:
   source: docker.io/jenkins/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
-    limit: 3
+    limit: 9999
 
 kube-tasks:
   source: docker.io/maorfr/
