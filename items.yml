@@ -202,3 +202,9 @@ busybox:
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
   tag:
     limit: 9999
+
+alpine:
+  source: docker.io/library/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
