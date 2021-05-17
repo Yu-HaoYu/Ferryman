@@ -64,6 +64,12 @@ descheduler:
   tag:
     limit: 9999
 
+cluster-autoscaler:
+  source: k8s.gcr.io/autoscaling/
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
+    
 #########
 flannel:
   source: quay.io/coreos/
