@@ -1,4 +1,4 @@
 requests
 PyYaml
-docker
+docker==4.4.4
 retry
