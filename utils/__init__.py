@@ -191,3 +191,16 @@ def load_yml(file: str) -> dict:
         result = yaml.load(f, Loader=yaml.SafeLoader)
         logging.debug(f"Load YML File: {result}")
     return result
+
+# Login authentication
+def auth() -> dict:
+    try:
+        target_user = os.environ.get('TARGET_USER')
+        target_password = os.environ.get('TARGET_PASSWORD')
+        docker_auth = {
+            'username': target_user,
+            'password': target_password
+        }
+    except ValueError:
+        sys.exit(f'ERROR: The environment variable `TARGET_USER` or `TARGET_PASSWORD` cannot be found, please check')
+    return docker_auth

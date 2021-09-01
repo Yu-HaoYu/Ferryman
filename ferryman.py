@@ -2,68 +2,12 @@
 import sys, os, datetime, logging, json, re
 import requests
 import yaml
-import docker
+
 from retry.api import retry_call
 
 from typing import Dict, List
-from config import config
+from config import config, target_auth, docker_client
 from utils import Items, SourceRepo
-
-# # Define the log format
-# logging.basicConfig(
-#     level=logging.INFO,
-#     # level=logging.DEBUG,
-#     format='[%(asctime)s] [%(levelname)s] [%(funcName)s] %(message)s',
-#     datefmt='%Y-%m-%d %H:%M:%S'
-# )
-
-# Create docker client
-docker_client = docker.APIClient(timeout=60, base_url='unix:///var/run/docker.sock')
-
-
-#################################################
-
-class Utils():
-    def __init__(self):
-        # Init
-        self.__init()
-
-    # Init
-    def __init(self) -> None:
-        self.create_dir("history")
-
-    # Login authentication
-    @staticmethod
-    def auth() -> dict:
-        try:
-            target_user = os.environ.get('TARGET_USER')
-            target_password = os.environ.get('TARGET_PASSWORD')
-            auth = {
-                'username': target_user,
-                'password': target_password
-            }
-        except ValueError:
-            sys.exit(
-                f'ERROR: The environment variable `TARGET_USER` or `TARGET_PASSWORD` cannot be found, please check')
-        return auth
-
-    # Create a directory
-    def create_dir(self, dir: str) -> None:
-        if os.path.exists(dir):
-            logging.info(f"The {dir} directory already exists")
-        else:
-            logging.info(f"No directory found for {dir}")
-            os.makedirs(dir)
-            logging.info(f"Create {dir} directory")
-        return
-
-    # Load the list of synchronized items (YML file)
-    def load_yml(self, file: str) -> dict:
-        logging.info(f"Load YML File: {file}")
-        with open(file, "rb") as f:
-            result = yaml.load(f, Loader=yaml.SafeLoader)
-            logging.debug(f"Load YML File: {result}")
-        return result
 
 
 # 重新封装Docker模块Push方法，增加登录验证失败报错与推送镜像时显示进度条
@@ -184,8 +128,6 @@ if __name__ == "__main__":
 
 
     logging.info("Start synchronization")
-
-    target_auth = Utils.auth()
 
     # 获取同步项目清单
     for i in config.items():
