@@ -5,13 +5,17 @@ import yaml
 import docker
 from retry.api import retry_call
 
-# Define the log format
-logging.basicConfig(
-    level=logging.INFO,
-    # level=logging.DEBUG,
-    format='[%(asctime)s] [%(levelname)s] [%(funcName)s] %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
+from typing import Dict, List
+from config import config
+from utils import Items, SourceRepo
+
+# # Define the log format
+# logging.basicConfig(
+#     level=logging.INFO,
+#     # level=logging.DEBUG,
+#     format='[%(asctime)s] [%(levelname)s] [%(funcName)s] %(message)s',
+#     datefmt='%Y-%m-%d %H:%M:%S'
+# )
 
 # Create docker client
 docker_client = docker.APIClient(timeout=60, base_url='unix:///var/run/docker.sock')
@@ -98,120 +102,8 @@ def write_history(items, domain, local_list):
     logging.info("Append tags to local history")
     return
 
-
-# 日期时间转换，输出统一格式日期
-def datetime_conv(dt):
-    dt = str(dt)
-    if dt.isdigit():
-        if len(dt) > 10:
-            dt = int(dt) / 1000
-        d = datetime.datetime.fromtimestamp(int(dt))
-    else:
-        d = datetime.datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S.%fZ')
-    result = d.strftime("%Y-%m-%d %H:%M:%S")
-    return result
-
-
-# 获取k8s的tag
-def requests_gcr(items, namespaces="none"):
-    logging.info(f"The current mirror source is k8s.gcr.io")
-    # 获取Tag
-    if namespaces == "none":
-        url = (f"https://k8s.gcr.io/v2/{items}/tags/list")
-    else:
-        url = (f"https://k8s.gcr.io/v2/{namespaces}/{items}/tags/list")
-    r = requests.get(url)
-    response_dict = r.json().get("manifest")
-    # 提取Tag、Date、sha256
-    src_list = []
-    for v in response_dict.items():
-        if len(v[1]["tag"]) != 0:
-            tag = v[1]["tag"][0]
-            sha256 = v[0]
-            dt = datetime_conv(v[1]["timeUploadedMs"])
-            src_list.append({"dt": dt, "sha256": sha256, "tag": tag})
-    # 按时间字段排序
-    result = sorted(src_list, key=lambda x: x["dt"], reverse=True)
-    return result
-
-
-# 获取quay.io的tag
-def requests_quay(items, namespaces="none"):
-    logging.info(f"The current mirror source is quay.io")
-    # 循环获取Tag
-    response_list = []
-    for i in range(100):
-        page = (i + 1)
-        url = (f"https://quay.io/api/v1/repository/{namespaces}/{items}/tag?limit=100&page={page}&onlyActiveTags=true")
-        r = requests.get(url)
-        buffer_list = r.json().get("tags")
-
-        if len(buffer_list) != 0:
-            logging.info(f"The {page} page, tags count {len(buffer_list)}")
-            for x in buffer_list:
-                response_list.append(x)
-        else:
-            logging.info(f"The {page} page, this is the last page")
-            break
-    # 提取Tag、Date、sha256
-    src_list = []
-    for i in response_list:
-        tag = i["name"]
-        sha256 = i["manifest_digest"]
-        if "start_ts" in i.keys():
-            dt = datetime_conv(i["start_ts"])
-        else:
-            dt = datetime_conv(0)
-        src_list.append({"dt": dt, "sha256": sha256, "tag": tag})
-    # 按时间字段排序
-    result = sorted(src_list, key=lambda x: x["dt"], reverse=True)
-    return result
-
-
-# 获取dockio.io的tag
-def requests_docker(items, namespaces="none"):
-    logging.info(f"The current mirror source is docker.io")
-    # 循环获取Tag
-    response_list = []
-    for i in range(100):
-        page = (i + 1)
-        url = (f"https://hub.docker.com/v2/repositories/{namespaces}/{items}/tags?page_size=100&page={page}")
-        r = requests.get(url)
-        buffer_list = r.json().get("results")
-
-        if len(buffer_list) != 0:
-            logging.info(f"The {page} page, tags count {len(buffer_list)}")
-            for x in buffer_list:
-                response_list.append(x)
-        else:
-            logging.info(f"The {page} page, this is the last page")
-            break
-    # 提取Tag和Date
-    src_list = []
-    for v in response_list:
-        tag = v["name"]
-        # Get datetime
-        if v['last_updated'] == None:
-            dt = datetime_conv(0)
-        else:
-            dt = datetime_conv(v["last_updated"])
-        # Get sha256
-        for x in v['images']:
-            if x['architecture'] == "amd64" and x['os'] != "windows":
-                if "digest" in x.keys():
-                    sha256 = x['digest']
-                else:
-                    sha256 = "Unknown"
-                src_list.append({"dt": dt, "sha256": sha256, "tag": tag})
-    # 按时间字段排序
-    result = sorted(src_list, key=lambda x: x["dt"], reverse=True)
-    return result
-
-
 # 定义镜像缓存队列
 queue_list = []
-
-
 # 清理缓存镜像
 def cache_cleanup():
     global queue_list
@@ -287,37 +179,23 @@ def sync_images(image, src_repo, target_repo, target_auth, tag_list):
         logging.info("%s Sync Success" % image)
     return
 
+# main
+if __name__ == "__main__":
 
-# 主逻辑
-def main(yml):
+
+    logging.info("Start synchronization")
+
     target_auth = Utils.auth()
 
     # 获取同步项目清单
-    for (key, value) in yml.items():
-        items = key
-        source = value["source"]
-        domain = source.split("/")[0]
-        namespaces = source.split("/")[-2]
-        target = value["target"]
-        limit = value["tag"]["limit"]
+    for i in config.items():
+        item: Dict = Items(i).resolve
+        src_list = SourceRepo(item).src_list
 
-        # 开始同步
-        logging.info(f"Start syncing: {items}")
-        logging.info(f"Update limit: {limit}")
-
-        # 判断源
-        if "k8s.gcr.io" in source:
-            if namespaces == domain:
-                src_list = requests_gcr(items)
-            else:
-                src_list = requests_gcr(items, namespaces)
-        elif 'quay.io' in source:
-            src_list = requests_quay(items, namespaces)
-        elif 'docker.io' in source:
-            src_list = requests_docker(items, namespaces)
-        else:
-            logging.info("Unsupported sync source")
-            exit()
+        repo_name = item["repo_name"]
+        domain = item["domain"]
+        source = item["source"]
+        target = item["target"]
 
         # 排除掉Win平台、Gitlab-ce nightly
         new_src_list = src_list.copy()
@@ -327,13 +205,13 @@ def main(yml):
         new_src_list.clear()
 
         # 限制更新Tag数量
-        src_list = src_list[:limit]
+        src_list = src_list[:item["tag_limit"]]
 
         logging.info(f"Latest version: {src_list[0]['tag']}, Lastst updated: {src_list[0]['dt']}")
         logging.debug(f"Src list: Count {len(src_list)}, {src_list}")
 
         # 加载本地同步记录
-        history_list = load_history(items, domain)
+        history_list = load_history(repo_name, domain)
 
         logging.debug(f"History list: Count {len(history_list)}, {history_list}")
 
@@ -351,22 +229,12 @@ def main(yml):
         # 如果同步列表为空则不同步
         if not dedupl_list:
             logging.info(f"Src List: {len(src_list)}, History List: {len(history_list)}, Sync List: {len(dedupl_list)}")
-            logging.info(f"The Sync list of the {items} is empty, no need to sync.")
-            logging.info(f"{items} Sync Success")
+            logging.info(f"The Sync list of the {repo_name} is empty, no need to sync.")
+            logging.info(f"{repo_name} Sync Success")
         else:
             logging.info(f"Src List: {len(src_list)}, History List: {len(history_list)}, Sync List: {len(dedupl_list)}")
             # 调用镜像同步
-            for i in items.splitlines(True):
-                sync_images(items, source, target, target_auth, dedupl_list)
+            for i in repo_name.splitlines(True):
+                print(repo_name, source)
+                sync_images(repo_name, source, target, target_auth, dedupl_list)
         print()
-    return
-
-
-# main
-if __name__ == "__main__":
-    logging.info("Start synchronization")
-
-    utils = Utils()
-    config = utils.load_yml("items.yml")
-
-    main(config)
