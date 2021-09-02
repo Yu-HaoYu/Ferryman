@@ -4,7 +4,7 @@ from typing import Dict, List
 import docker
 
 # Define log level and format
-LOG_LEVEL = 'info'
+LOG_LEVEL = 'debug'
 logging.basicConfig(
     level=logging.getLevelName(LOG_LEVEL.upper()),
     format='%(asctime)s | %(levelname)s | %(name)s | %(lineno)s | %(thread)s | %(funcName)s | %(message)s',
