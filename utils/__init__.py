@@ -70,7 +70,7 @@ class SourceRepo():
 
     # Get the list of gcr tags
     def gcr(self, repo_name, **kwargs):
-        logging.info(f"The current mirror source is k8s.gcr.io")
+        logging.info(f"The current mirror source is k8s.gcr.io, repo {repo_name}")
 
         # Get a list of tags
         if kwargs.get("namespaces") is None:
@@ -96,7 +96,7 @@ class SourceRepo():
 
     # 获取quay.io的tag
     def quay(self, repo_name, **kwargs):
-        logging.info(f"The current mirror source is quay.io")
+        logging.info(f"The current mirror source is quay.io, repo {repo_name}")
         items = repo_name
         namespaces = kwargs['namespaces']
 
@@ -132,7 +132,7 @@ class SourceRepo():
 
     # 获取dockio.io的tag
     def docker(self, repo_name, **kwargs):
-        logging.info(f"The current mirror source is docker.io")
+        logging.info(f"The current mirror source is docker.io, repo {repo_name}")
         items = repo_name
         namespaces = kwargs['namespaces']
 

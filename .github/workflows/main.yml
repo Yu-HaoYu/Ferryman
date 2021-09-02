@@ -15,19 +15,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: init1
+    - name: Checkout
+      uses: actions/checkout@v2
+
+
+    - name: Setup docker
       uses: docker-practice/actions-setup-docker@master
       with:
         docker_version: '19.03'
 
-    - name: init2
+    - name: Docker version
       run: |
         set -x
         docker version
-        docker run --rm hello-world
 
-    - uses: actions/checkout@v2
-      
     - name: init
       run: |
         echo "Current path: $(pwd)"
