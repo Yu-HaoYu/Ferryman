@@ -7,7 +7,7 @@ from retry.api import retry_call
 
 from typing import Dict, List
 from config import config, target_auth, docker_client
-from utils import Items, SourceRepo
+from utils import Items, SourceRepo, create_dir
 
 
 # 重新封装Docker模块Push方法，增加登录验证失败报错与推送镜像时显示进度条
@@ -125,9 +125,10 @@ def sync_images(image, src_repo, target_repo, target_auth, tag_list):
 
 # main
 if __name__ == "__main__":
-
-
     logging.info("Start synchronization")
+
+    # Create sync history folder
+    create_dir("history")
 
     # 获取同步项目清单
     for i in config.items():
