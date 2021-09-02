@@ -1,13 +1,11 @@
 #!/usr/bin/python
-import sys, os, datetime, logging, json, re
-import requests
-import yaml
+import os, datetime, logging
 
 from retry.api import retry_call
 
-from typing import Dict, List
-from config import config, target_auth, docker_client
-from utils import Items, SourceRepo, create_dir
+from typing import Dict
+from lib.config import config, target_auth, docker_client
+from lib.utils import Items, SourceRepo, create_dir
 
 
 # 重新封装Docker模块Push方法，增加登录验证失败报错与推送镜像时显示进度条
