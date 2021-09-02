@@ -148,7 +148,7 @@ if __name__ == "__main__":
         # 限制更新Tag数量
         src_list = src_list[:item["tag_limit"]]
 
-        logging.info(f"Latest version: {src_list[0]['tag']}, Lastst updated: {src_list[0]['dt']}")
+        logging.info(f"Repo: {repo_name}, Latest version: {src_list[0]['tag']}, Lastst updated: {src_list[0]['dt']}")
         logging.debug(f"Src list: Count {len(src_list)}, {src_list}")
 
         # 加载本地同步记录
