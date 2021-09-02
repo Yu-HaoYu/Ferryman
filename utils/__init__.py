@@ -2,7 +2,7 @@ import logging
 from typing import Dict, List, Tuple
 import yaml
 import requests
-import sys, os, datetime, logging, json, re
+import sys, os, datetime, logging, json, re, time
 
 # Configuration item resolution
 class Items():
@@ -139,6 +139,7 @@ class SourceRepo():
         # 循环获取Tag
         response_list = []
         for i in range(100):
+            time.sleep(5)
             page = (i + 1)
             url = (f"https://hub.docker.com/v2/repositories/{namespaces}/{items}/tags?page_size=100&page={page}")
             r = requests.get(url)
