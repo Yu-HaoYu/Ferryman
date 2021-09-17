@@ -89,6 +89,12 @@ kube-state-metrics:
   tag:
     limit: 9999
 ########
+ks-installer:
+  source: docker.io/kubesphere/
+  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  tag:
+    limit: 9999
+
 dashboard:
   source: docker.io/kubernetesui/
   target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/

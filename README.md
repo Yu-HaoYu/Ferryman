@@ -50,6 +50,7 @@
 | quay.io    | coreos                        | flannel                    |
 | quay.io    | kubernetes-ingress-controller | nginx-ingress-controller   |
 | quay.io    | coreos                        | kube-state-metrics:v1.9.7  |
+| docker.io  | kubesphere                    | ks-installer               |
 | docker.io  | kubernetesui                  | dashboard                  |
 | docker.io  | jenkins                       | jenkins                    |
 | docker.io  | jenkins                       | inbound-agent              |
@@ -70,7 +71,7 @@
 | docker.io  | library                       | mysql                      |
 | docker.io  | library                       | redis                      |
 | docker.io  | library                       | busybox                    |
-| docker.io  | library                       | alpine                    |
+| docker.io  | library                       | alpine                     |
 
 
 
