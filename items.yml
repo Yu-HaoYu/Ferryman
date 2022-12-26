@@ -2,7 +2,7 @@ pause:
   source: k8s.gcr.io/
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    limit: 9999
+    limit: 9998
 
 coredns:
   source: k8s.gcr.io/
