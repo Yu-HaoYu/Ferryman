@@ -1,8 +1,14 @@
-pause:
-  source: k8s.gcr.io/
+ks-guestbook-demo:
+  source: k8s.gcr.io/heptio-images
   target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
   tag:
-    limit: 9998
+    limit: 9999
+
+pause:
+  source: k8s.gcr.io/google-containers
+  target: registry.cn-shenzhen.aliyuncs.com/kubernetes_aliyun/
+  tag:
+    limit: 9999
 
 coredns:
   source: k8s.gcr.io/
