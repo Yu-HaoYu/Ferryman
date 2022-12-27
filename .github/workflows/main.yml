@@ -7,9 +7,9 @@ on:
     # 忽略指定文件
     paths-ignore:
     - 'README.md'
-  schedule:
-    # Minimum interval 5 minutes
-    - cron:  '0 */6 * * *'
+#   schedule:
+#     # Minimum interval 5 minutes
+#     - cron:  '0 */6 * * *'
     
 jobs:
   build:
